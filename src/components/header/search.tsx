@@ -14,7 +14,7 @@ interface Show {
   id: number;
   name: string;
   description: string;
-  poster?: {
+  poster: {
     src: string;
   };
   cast_and_crew?: Array<{
@@ -44,6 +44,8 @@ const Search: React.FC<SearchProps> = ({ categorylist, allshows }) => {
   const [hoveredShowId, setHoveredShowId] = useState<string | number | null>(
     null
   );
+
+  console.log(allshows.data, "hovershowid");
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -115,7 +117,7 @@ const Search: React.FC<SearchProps> = ({ categorylist, allshows }) => {
       <>
         <div className="flex gap-4">
           <div>
-            <p className="text-white">{show.description}</p>
+            <p className="text-black">{show.description}</p>
             <ul className="flex space-x-2 flex-wrap">
               {showData.cast_and_crew?.slice(0, 20).map((person) => (
                 <li key={person.id} className="list-disc">
@@ -124,16 +126,14 @@ const Search: React.FC<SearchProps> = ({ categorylist, allshows }) => {
               ))}
             </ul>
           </div>
-          {showData.poster?.src && (
-            <div className="rounded-xl overflow-hidden">
-              <Image
-                src={showData.poster.src}
-                alt={showData.name}
-                width={250}
-                height={275}
-              />
-            </div>
-          )}
+          <div className="rounded-xl overflow-hidden">
+            <Image
+              src={showData.poster.src}
+              alt={showData.name}
+              width={250}
+              height={275}
+            />
+          </div>
         </div>
       </>
     );
@@ -155,7 +155,7 @@ const Search: React.FC<SearchProps> = ({ categorylist, allshows }) => {
             onChange={handleSearchChange}
             value={searchQuery}
             placeholder="Search Season title...."
-            className="w-full px-4 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 text-sm text-black border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
           <div className="container relative text-white min-w-full">
             <button
@@ -178,17 +178,24 @@ const Search: React.FC<SearchProps> = ({ categorylist, allshows }) => {
                         >
                           <div className="flex relative">
                             {show.name}
-                            {hoveredShowId === show.id && show.poster?.src && (
-                              <div className="absolute left-full ml-2 top-1/2 -translate-y-1/2 z-50">
-                                <div className="rounded-xl overflow-hidden shadow-lg border border-gray-700">
-                                  <Image
-                                    src={show.poster.src}
-                                    alt={show.name}
-                                    width={150}
-                                    height={200}
-                                    className="rounded"
-                                  />
-                                </div>
+                            {hoveredShowId === show.id && (
+                              <div className="show-banner-image flex gap-2 mt-2 absolute right-0 top-0">
+                                {allshows.data.map(
+                                  (allshow) =>
+                                    allshow.id === show.id && (
+                                      <div
+                                        key={allshow.id}
+                                        className="rounded-xl overflow-hidden"
+                                      >
+                                        <Image
+                                          src={allshow.poster.src}
+                                          alt={allshow.name}
+                                          width={184}
+                                          height={275}
+                                        />
+                                      </div>
+                                    )
+                                )}
                               </div>
                             )}
                           </div>
