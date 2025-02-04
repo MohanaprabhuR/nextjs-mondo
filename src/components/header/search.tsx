@@ -45,8 +45,6 @@ const Search: React.FC<SearchProps> = ({ categorylist, allshows }) => {
     null
   );
 
-  console.log(allshows.data, "hovershowid");
-
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
