@@ -1,7 +1,6 @@
 import HeroCarousel from "@/components/hero/carousal";
 // import ShowCarousal from "@/components/ShowCarousal/ShowCarousal";
 import GenreCarouselItem from "@/components/show/category";
-import Footer from "@/components/footer";
 
 export default async function Shows() {
   const data = await fetch(`${process.env.API_URL}/api/shows?populate=*`);
@@ -21,7 +20,6 @@ export default async function Shows() {
           <GenreCarouselItem key={index} genre={genre} allShows={shows.data} />
         ))}
       </section>
-      <Footer />
     </>
   );
 }
